@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pashto Simple Present Tense Quiz</title>
+<style>
+  :root{
+    --teal:#0d3b3e;
+    --teal-deep:#082728;
+    --saffron:#e8a33d;
+    --saffron-light:#f4c869;
+    --brick:#c1442e;
+    --leaf:#4f8a52;
+    --cream:#f7efdb;
+    --charcoal:#2b2420;
+    --gold-line:#caa24a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Trebuchet MS','Segoe UI',sans-serif;
+    margin:0;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:28px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(232,163,61,.10), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(193,68,46,.12), transparent 45%),
+      var(--teal-deep);
+    color:var(--charcoal);
+  }
+
+  .frame{
+    position:relative;
+    max-width:600px;width:100%;
+    padding:10px;
+    background:
+      repeating-linear-gradient(45deg, var(--saffron) 0 8px, var(--brick) 8px 16px);
+    border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+  }
+  .card{
+    position:relative;
+    background:var(--cream);
+    border-radius:16px;
+    padding:34px 30px 28px;
+    border:3px solid var(--teal);
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:10px;
+    border:2px dashed var(--gold-line);
+    border-radius:10px;
+    pointer-events:none;
+    opacity:.55;
+  }
+
+  .eyebrow{
+    font-size:.72em;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--brick);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  h1{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.55em;
+    color:var(--teal);
+    margin:0 0 18px;
+    font-weight:700;
+    letter-spacing:.01em;
+  }
+
+  /* tasbih-style progress beads */
+  .beads{
+    display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;
+  }
+  .bead{
+    width:16px;height:16px;border-radius:50%;
+    background:#e3d7b4;
+    border:2px solid var(--teal);
+    transition:.2s;
+  }
+  .bead.done{background:var(--leaf);border-color:var(--leaf);}
+  .bead.current{background:var(--saffron);border-color:var(--brick);transform:scale(1.25);}
+
+  .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:.85em;color:var(--teal);margin-bottom:6px;font-weight:600;
+  }
+  .score-pill{
+    background:var(--teal);color:var(--cream);
+    padding:4px 12px;border-radius:20px;font-size:.85em;font-weight:700;
+  }
+
+  .sentence{
+    font-family:Georgia,serif;
+    font-size:1.45em;
+    font-weight:700;
+    color:var(--charcoal);
+    margin:18px 0 22px;
+    line-height:1.5;
+    padding:14px 16px;
+    background:#fff8e8;
+    border-left:5px solid var(--brick);
+    border-radius:6px;
+  }
+  .blank{color:var(--brick);text-decoration:underline wavy var(--saffron);}
+
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  button.opt{
+    padding:15px 10px;font-size:1.08em;font-weight:700;
+    border:2.5px solid var(--teal);border-radius:12px;
+    background:#fff;color:var(--teal);
+    cursor:pointer;transition:.15s;
+    font-family:inherit;
+  }
+  button.opt:hover:not(:disabled){
+    background:var(--saffron-light);
+    transform:translateY(-2px);
+  }
+  button.opt.correct{background:var(--leaf);color:#fff;border-color:#3a6b3d;}
+  button.opt.wrong{background:var(--brick);color:#fff;border-color:#8e2f1f;}
+  button.opt:disabled{cursor:default;}
+
+  .feedback{
+    margin-top:16px;font-weight:700;min-height:24px;font-size:1.02em;
+  }
+
+  .nav{margin-top:22px;display:flex;justify-content:space-between;align-items:center;}
+  button.next, button.back{
+    border:none;
+    padding:11px 26px;border-radius:10px;font-size:1em;font-weight:700;
+    cursor:pointer;font-family:inherit;
+    transition:.1s;
+  }
+  button.next{
+    background:var(--brick);color:#fff;
+    box-shadow:0 4px 0 #8e2f1f;
+  }
+  button.next:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #8e2f1f;}
+  button.next:disabled{opacity:.35;cursor:default;box-shadow:none;}
+  button.back{
+    background:var(--cream);color:var(--teal);
+    border:2.5px solid var(--teal);
+    box-shadow:0 4px 0 #b7a060;
+  }
+  button.back:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #b7a060;}
+  button.back:disabled{opacity:.3;cursor:default;box-shadow:none;}
+
+  .final{text-align:center;}
+  .final .eyebrow{text-align:center;}
+  .final h1{font-size:1.8em;}
+  .final .scoreline{
+    font-size:1.4em;font-weight:700;color:var(--brick);margin:14px 0 8px;
+  }
+  .final p{color:var(--teal);font-size:1.05em;}
+  button.restart{
+    background:var(--teal);color:var(--cream);border:none;
+    padding:13px 30px;border-radius:10px;font-size:1.05em;font-weight:700;
+    cursor:pointer;margin-top:16px;font-family:inherit;
+    box-shadow:0 4px 0 var(--teal-deep);
+  }
+  button.restart:active{transform:translateY(3px);box-shadow:0 1px 0 var(--teal-deep);}
+
+  @media (max-width:420px){
+    .options{grid-template-columns:1fr;}
+    .sentence{font-size:1.2em;}
+  }
+</style>
+</head>
+<body>
+<div class="frame"><div class="card" id="app"></div></div>
+<script>
+const quiz = [
+ {s:"Za ___ school k yam?", opts:["yam","day","da","u"], a:"yam"},
+ {s:"Za dalta ___ yam.", opts:["na","pa","wo","wa"], a:"na"},
+ {s:"Da Aisha ___?", opts:["day","da","yam","di"], a:"da"},
+ {s:"Da Aisha pa kor k ___ da.", opts:["day","na","ye","di"], a:"na"},
+ {s:"Hagha (Ali) masroof ___?", opts:["da","ye","day","u"], a:"day"},
+ {s:"Hagha (Ali) masroof ___ day.", opts:["ma","na","ta","de"], a:"na"},
+ {s:"Tasu pa kor k ___?", opts:["yam","yai","di","u"], a:"yai"},
+ {s:"Tasu khapa ___ yai.", opts:["na","pa","ma","ta"], a:"na"},
+ {s:"Za bemar ___?", opts:["day","da","yam","di"], a:"yam"},
+ {s:"Hagha (Aisha) pa meeting k ___ da.", opts:["na","pa","ye","u"], a:"na"},
+ {s:"Mung pa kor k ___?", opts:["yam","yai","di","u"], a:"u"},
+ {s:"Mung khapa ___ u.", opts:["yam","na","di","ye"], a:"na"},
+ {s:"Haghvee pa bazar k ___?", opts:["di","u","yai","day"], a:"di"},
+ {s:"Haghvee masroof ___ di.", opts:["ma","na","pa","ta"], a:"na"},
+ {s:"Duwi ustadan ___?", opts:["u","yai","di","yam"], a:"di"},
+ {s:"Duwi dalta ___ di.", opts:["na","pa","wo","wa"], a:"na"},
+ {s:"Mung khushala ___?", opts:["yai","u","di","day"], a:"u"},
+ {s:"Mung nan wuzgar ___ u.", opts:["ma","ta","na","pa"], a:"na"},
+ {s:"Haghvee dalta ___?", opts:["di","u","yai","day"], a:"di"},
+ {s:"Tasu pa daftar k ___ yai.", opts:["na","de","ma","ta"], a:"na"}
+];
+
+let idx = 0;
+let answers = new Array(quiz.length).fill(null); // stores chosen option per question, or null
+
+function currentScore(){
+  return answers.reduce((sum,ans,i)=> sum + (ans===quiz[i].a ? 1 : 0), 0);
+}
+
+function beadsHTML(){
+  return '<div class="beads">' + quiz.map((_,i)=>{
+    let cls='bead';
+    if(answers[i] !== null) cls+=' done';
+    if(i===idx) cls+=' current';
+    return `<span class="${cls}"></span>`;
+  }).join('') + '</div>';
+}
+
+function render(){
+  const app = document.getElementById('app');
+  if(idx >= quiz.length){
+    const score = currentScore();
+    app.innerHTML = `
+      <div class="final">
+        <div class="eyebrow">Sabaq Mukamal &middot; Lesson Complete</div>
+        <h1>🪔 Quiz Tamam Shawa!</h1>
+        ${beadsHTML()}
+        <div class="scoreline">${score} / ${quiz.length} Correct</div>
+        <p>${score===quiz.length?"Perfect! Da pakha de! 👏":score>=quiz.length*0.7?"Ghazaab! Da ba sho — keep going.":"Praktis kawa — du'a is in the doing."}</p>
+        <div class="nav" style="justify-content:center;gap:12px;">
+          <button class="back" onclick="goBack()">&larr; Review Last</button>
+          <button class="restart" onclick="restart()">Bya Kheli &rarr; Play Again</button>
+        </div>
+      </div>`;
+    return;
+  }
+  const q = quiz[idx];
+  const chosen = answers[idx];
+  const isAnswered = chosen !== null;
+  app.innerHTML = `
+    <div class="eyebrow">Pashto &middot; Simple Present Tense</div>
+    ${beadsHTML()}
+    <div class="meta">
+      <span>Sentence ${idx+1} of ${quiz.length}</span>
+      <span class="score-pill">Score: ${currentScore()}</span>
+    </div>
+    <h1>Fill in the Blank</h1>
+    <div class="sentence">${q.s.replace('___','<span class="blank">___</span>')}</div>
+    <div class="options" id="opts">
+      ${q.opts.map(o=>`<button class="opt" data-val="${o}" onclick="select('${o}', this)">${o}</button>`).join('')}
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="nav">
+      <button class="back" id="backBtn" ${idx===0?'disabled':''} onclick="goBack()">&larr; Back</button>
+      <button class="next" id="nextBtn" ${isAnswered?'':'disabled'} onclick="next()">Next &rarr;</button>
+    </div>`;
+
+  if(isAnswered){
+    markAnswer(chosen, q.a);
+  }
+}
+
+function markAnswer(chosen, correctVal){
+  const buttons = document.querySelectorAll('#opts button');
+  buttons.forEach(b=>{
+    const val = b.getAttribute('data-val');
+    if(val === correctVal) b.classList.add('correct');
+    else if(val === chosen) b.classList.add('wrong');
+    b.disabled = true;
+  });
+  const fb = document.getElementById('fb');
+  if(chosen === correctVal){
+    fb.style.color = '#3a6b3d';
+    fb.textContent = '✅ Sahi! Correct.';
+  } else {
+    fb.style.color = '#8e2f1f';
+    fb.textContent = `❌ Bya kosh. Correct answer: "${correctVal}"`;
+  }
+}
+
+function select(choice, btn){
+  if(answers[idx] !== null) return;
+  answers[idx] = choice;
+  const q = quiz[idx];
+  markAnswer(choice, q.a);
+  document.getElementById('nextBtn').disabled = false;
+  document.querySelectorAll('.beads .bead')[idx].classList.add('done');
+}
+
+function next(){ idx++; render(); }
+function goBack(){ if(idx>0){ idx--; render(); } }
+function restart(){ idx = 0; answers = new Array(quiz.length).fill(null); render(); }
+
+render();
+</script>
+</body>
+</html>
