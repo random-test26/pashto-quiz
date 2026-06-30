@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Pashto Simple Present Tense Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Mukta:wght@500;600;700&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --teal:#0d3b3e;
@@ -17,7 +20,7 @@
   }
   *{box-sizing:border-box;}
   body{
-    font-family:'Trebuchet MS','Segoe UI',sans-serif;
+    font-family:'Mukta','Trebuchet MS','Segoe UI',sans-serif;
     margin:0;
     min-height:100vh;
     display:flex;align-items:center;justify-content:center;
@@ -56,6 +59,7 @@
   }
 
   .eyebrow{
+    font-family:'Mukta',sans-serif;
     font-size:.72em;
     letter-spacing:.16em;
     text-transform:uppercase;
@@ -64,8 +68,8 @@
     margin-bottom:6px;
   }
   h1{
-    font-family:Georgia,'Times New Roman',serif;
-    font-size:1.55em;
+    font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    font-size:1.75em;
     color:var(--teal);
     margin:0 0 18px;
     font-weight:700;
@@ -95,8 +99,8 @@
   }
 
   .sentence{
-    font-family:Georgia,serif;
-    font-size:1.45em;
+    font-family:'Cormorant Garamond',Georgia,serif;
+    font-size:1.65em;
     font-weight:700;
     color:var(--charcoal);
     margin:18px 0 22px;
@@ -107,6 +111,28 @@
     border-radius:6px;
   }
   .blank{color:var(--brick);text-decoration:underline wavy var(--saffron);}
+
+  .urdu{
+    direction:rtl;
+    font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif;
+    font-size:1.15em;
+    color:var(--teal);
+    background:#eef3ee;
+    border-right:5px solid var(--leaf);
+    padding:10px 16px;
+    border-radius:6px;
+    margin:-10px 0 20px;
+  }
+  .urdu .label{
+    font-family:'Mukta',sans-serif;
+    font-size:.7em;
+    color:var(--brick);
+    font-weight:700;
+    display:block;
+    margin-bottom:2px;
+    direction:ltr;
+    text-align:right;
+  }
 
   .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   button.opt{
@@ -174,26 +200,26 @@
 <div class="frame"><div class="card" id="app"></div></div>
 <script>
 const quiz = [
- {s:"Za ___ school k yam?", opts:["yam","day","da","u"], a:"yam"},
- {s:"Za dalta ___ yam.", opts:["na","pa","wo","wa"], a:"na"},
- {s:"Da Aisha ___?", opts:["day","da","yam","di"], a:"da"},
- {s:"Da Aisha pa kor k ___ da.", opts:["day","na","ye","di"], a:"na"},
- {s:"Hagha (Ali) masroof ___?", opts:["da","ye","day","u"], a:"day"},
- {s:"Hagha (Ali) masroof ___ day.", opts:["ma","na","ta","de"], a:"na"},
- {s:"Tasu pa kor k ___?", opts:["yam","yai","di","u"], a:"yai"},
- {s:"Tasu khapa ___ yai.", opts:["na","pa","ma","ta"], a:"na"},
- {s:"Za bemar ___?", opts:["day","da","yam","di"], a:"yam"},
- {s:"Hagha (Aisha) pa meeting k ___ da.", opts:["na","pa","ye","u"], a:"na"},
- {s:"Mung pa kor k ___?", opts:["yam","yai","di","u"], a:"u"},
- {s:"Mung khapa ___ u.", opts:["yam","na","di","ye"], a:"na"},
- {s:"Haghvee pa bazar k ___?", opts:["di","u","yai","day"], a:"di"},
- {s:"Haghvee masroof ___ di.", opts:["ma","na","pa","ta"], a:"na"},
- {s:"Duwi ustadan ___?", opts:["u","yai","di","yam"], a:"di"},
- {s:"Duwi dalta ___ di.", opts:["na","pa","wo","wa"], a:"na"},
- {s:"Mung khushala ___?", opts:["yai","u","di","day"], a:"u"},
- {s:"Mung nan wuzgar ___ u.", opts:["ma","ta","na","pa"], a:"na"},
- {s:"Haghvee dalta ___?", opts:["di","u","yai","day"], a:"di"},
- {s:"Tasu pa daftar k ___ yai.", opts:["na","de","ma","ta"], a:"na"}
+ {s:"Za ___ school k yam?", opts:["yam","day","da","u"], a:"yam", ur:"کیا میں سکول میں ہوں؟"},
+ {s:"Za dalta ___ yam.", opts:["na","pa","wo","wa"], a:"na", ur:"میں یہاں نہیں ہوں۔"},
+ {s:"Da Aisha ___?", opts:["day","da","yam","di"], a:"da", ur:"کیا یہ عائشہ ہے؟"},
+ {s:"Da Aisha pa kor k ___ da.", opts:["day","na","ye","di"], a:"na", ur:"عائشہ گھر میں نہیں ہے۔"},
+ {s:"Hagha (Ali) masroof ___?", opts:["da","ye","day","u"], a:"day", ur:"کیا وہ (علی) مصروف ہے؟"},
+ {s:"Hagha (Ali) masroof ___ day.", opts:["ma","na","ta","de"], a:"na", ur:"وہ (علی) مصروف نہیں ہے۔"},
+ {s:"Tasu pa kor k ___?", opts:["yam","yai","di","u"], a:"yai", ur:"کیا آپ گھر میں ہیں؟"},
+ {s:"Tasu khapa ___ yai.", opts:["na","pa","ma","ta"], a:"na", ur:"آپ ناراض نہیں ہیں۔"},
+ {s:"Za bemar ___?", opts:["day","da","yam","di"], a:"yam", ur:"کیا میں بیمار ہوں؟"},
+ {s:"Hagha (Aisha) pa meeting k ___ da.", opts:["na","pa","ye","u"], a:"na", ur:"وہ (عائشہ) میٹنگ میں نہیں ہے۔"},
+ {s:"Mung pa kor k ___?", opts:["yam","yai","di","u"], a:"u", ur:"کیا ہم گھر میں ہیں؟"},
+ {s:"Mung khapa ___ u.", opts:["yam","na","di","ye"], a:"na", ur:"ہم ناراض نہیں ہیں۔"},
+ {s:"Haghvee pa bazar k ___?", opts:["di","u","yai","day"], a:"di", ur:"کیا وہ بازار میں ہیں؟"},
+ {s:"Haghvee masroof ___ di.", opts:["ma","na","pa","ta"], a:"na", ur:"وہ مصروف نہیں ہیں۔"},
+ {s:"Duwi ustadan ___?", opts:["u","yai","di","yam"], a:"di", ur:"کیا وہ دونوں استاد ہیں؟"},
+ {s:"Duwi dalta ___ di.", opts:["na","pa","wo","wa"], a:"na", ur:"وہ دونوں یہاں نہیں ہیں۔"},
+ {s:"Mung khushala ___?", opts:["yai","u","di","day"], a:"u", ur:"کیا ہم خوش ہیں؟"},
+ {s:"Mung nan wuzgar ___ u.", opts:["ma","ta","na","pa"], a:"na", ur:"ہم آج فارغ نہیں ہیں۔"},
+ {s:"Haghvee dalta ___?", opts:["di","u","yai","day"], a:"di", ur:"کیا وہ یہاں ہیں؟"},
+ {s:"Tasu pa daftar k ___ yai.", opts:["na","de","ma","ta"], a:"na", ur:"آپ دفتر میں نہیں ہیں۔"}
 ];
 
 let idx = 0;
@@ -242,6 +268,7 @@ function render(){
     </div>
     <h1>Fill in the Blank</h1>
     <div class="sentence">${q.s.replace('___','<span class="blank">___</span>')}</div>
+    <div class="urdu"><span class="label">ترجمہ &middot; Translation</span>${q.ur}</div>
     <div class="options" id="opts">
       ${q.opts.map(o=>`<button class="opt" data-val="${o}" onclick="select('${o}', this)">${o}</button>`).join('')}
     </div>
