@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pashto Simple Present Tense Quiz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,7 @@
     margin:0;
     min-height:100vh;
     display:flex;align-items:center;justify-content:center;
-    padding:28px;
+    padding:28px 14px;
     background:
       radial-gradient(circle at 15% 20%, rgba(232,163,61,.10), transparent 45%),
       radial-gradient(circle at 85% 80%, rgba(193,68,46,.12), transparent 45%),
@@ -190,9 +191,36 @@
   }
   button.restart:active{transform:translateY(3px);box-shadow:0 1px 0 var(--teal-deep);}
 
-  @media (max-width:420px){
-    .options{grid-template-columns:1fr;}
-    .sentence{font-size:1.2em;}
+  @media (max-width:480px){
+    body{padding:14px 8px;}
+    .frame{padding:7px;border-radius:16px;}
+    .card{padding:20px 16px 18px;border-radius:12px;}
+    .card::before{inset:7px;border-radius:8px;}
+    .eyebrow{font-size:.62em;letter-spacing:.1em;}
+    h1{font-size:1.3em;margin-bottom:12px;}
+    .beads{gap:4px;margin-bottom:14px;}
+    .bead{width:11px;height:11px;}
+    .meta{font-size:.75em;flex-wrap:wrap;gap:6px;}
+    .score-pill{padding:3px 10px;font-size:.8em;}
+    .sentence{font-size:1.25em;padding:12px;margin:14px 0 16px;line-height:1.4;}
+    .urdu{font-size:1em;padding:8px 12px;margin-top:-6px;margin-bottom:16px;}
+    .urdu .label{font-size:.65em;}
+    .options{grid-template-columns:1fr;gap:9px;}
+    button.opt{padding:13px 10px;font-size:1em;}
+    .feedback{font-size:.92em;}
+    .nav{margin-top:16px;gap:8px;}
+    button.next, button.back{padding:10px 16px;font-size:.92em;flex:1;}
+    .final h1{font-size:1.5em;}
+    .final .scoreline{font-size:1.15em;}
+    .final p{font-size:.95em;}
+    button.restart{padding:11px 20px;font-size:.95em;}
+    .final .nav{flex-direction:column;}
+  }
+
+  @media (max-width:340px){
+    .options{gap:7px;}
+    button.opt{font-size:.92em;padding:11px 8px;}
+    .sentence{font-size:1.1em;}
   }
 </style>
 </head>
