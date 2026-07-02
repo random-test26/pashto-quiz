@@ -99,18 +99,40 @@
     padding:4px 12px;border-radius:20px;font-size:.85em;font-weight:700;
   }
 
-  .sentence{
+  .sentence-row{display:flex;align-items:flex-start;gap:10px;}
+  .sentence{flex:1;
     font-family:'Cormorant Garamond',Georgia,serif;
     font-size:1.65em;
     font-weight:700;
     color:var(--charcoal);
-    margin:18px 0 22px;
+    margin:18px 0 0;
     line-height:1.5;
     padding:14px 16px;
     background:#fff8e8;
     border-left:5px solid var(--brick);
     border-radius:6px;
   }
+  button.speak{
+    margin-top:18px;
+    flex-shrink:0;
+    width:46px;height:46px;
+    border-radius:50%;
+    border:2.5px solid var(--teal);
+    background:#fff8e8;
+    color:var(--teal);
+    font-size:1.2em;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:.15s;
+    box-shadow:0 3px 0 #b7a060;
+  }
+  button.speak:hover{background:var(--saffron-light);}
+  button.speak.speaking{
+    background:var(--teal);
+    color:var(--cream);
+    animation:pulse .7s infinite alternate;
+  }
+  @keyframes pulse{from{transform:scale(1);}to{transform:scale(1.12);}}
   .blank{color:var(--brick);text-decoration:underline wavy var(--saffron);}
 
   .urdu{
@@ -202,7 +224,8 @@
     .bead{width:11px;height:11px;}
     .meta{font-size:.75em;flex-wrap:wrap;gap:6px;}
     .score-pill{padding:3px 10px;font-size:.8em;}
-    .sentence{font-size:1.25em;padding:12px;margin:14px 0 16px;line-height:1.4;}
+    .sentence{font-size:1.25em;padding:12px;margin:14px 0 0;line-height:1.4;}
+    button.speak{width:40px;height:40px;font-size:1em;margin-top:14px;}
     .urdu{font-size:1em;padding:8px 12px;margin-top:-6px;margin-bottom:16px;}
     .urdu .label{font-size:.65em;}
     .options{grid-template-columns:1fr;gap:9px;}
@@ -295,7 +318,10 @@ function render(){
       <span class="score-pill">Score: ${currentScore()}</span>
     </div>
     <h1>Fill in the Blank</h1>
-    <div class="sentence">${q.s.replace('___','<span class="blank">___</span>')}</div>
+    <div class="sentence-row">
+      <div class="sentence">${q.s.replace('___','<span class="blank">___</span>')}</div>
+      <button class="speak" id="speakBtn" onclick="speak(this)" title="Listen">🔊</button>
+    </div>
     <div class="urdu"><span class="label">ترجمہ &middot; Translation</span>${q.ur}</div>
     <div class="options" id="opts">
       ${q.opts.map(o=>`<button class="opt" data-val="${o}" onclick="select('${o}', this)">${o}</button>`).join('')}
@@ -338,9 +364,26 @@ function select(choice, btn){
   document.querySelectorAll('.beads .bead')[idx].classList.add('done');
 }
 
-function next(){ idx++; render(); }
-function goBack(){ if(idx>0){ idx--; render(); } }
-function restart(){ idx = 0; answers = new Array(quiz.length).fill(null); render(); }
+function speak(btn){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const q = quiz[idx];
+  // Clean the sentence: replace blank marker with "blank" for audio
+  const text = q.s.replace('___', '...');
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.85;
+  utter.pitch = 1;
+  btn.classList.add('speaking');
+  btn.textContent = '🔈';
+  utter.onend = () => { btn.classList.remove('speaking'); btn.textContent = '🔊'; };
+  utter.onerror = () => { btn.classList.remove('speaking'); btn.textContent = '🔊'; };
+  window.speechSynthesis.speak(utter);
+}
+
+function next(){ window.speechSynthesis && window.speechSynthesis.cancel(); idx++; render(); }
+function goBack(){ window.speechSynthesis && window.speechSynthesis.cancel(); if(idx>0){ idx--; render(); } }
+function restart(){ window.speechSynthesis && window.speechSynthesis.cancel(); idx = 0; answers = new Array(quiz.length).fill(null); render(); }
 
 render();
 </script>
